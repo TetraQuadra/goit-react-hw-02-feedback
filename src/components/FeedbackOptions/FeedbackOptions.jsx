@@ -1,22 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './FeedbackOptions.module.css';
 
 const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return (
-    <div style={{ display: 'flex', gap: 25, justifyContent: 'center' }}>
+    <div className={styles.feedbackOptions}>
       {options.map(item => (
         <button
           key={item}
           type="button"
           onClick={() => onLeaveFeedback(item)}
-          style={{
-            backgroundColor: 'blue',
-            color: 'white',
-            textTransform: 'uppercase',
-            border: 'none',
-            padding: 8,
-            borderRadius: 5,
-          }}
+          className={styles.feedbackButton}
         >
           {item}
         </button>
@@ -26,8 +20,8 @@ const FeedbackOptions = ({ options, onLeaveFeedback }) => {
 };
 
 FeedbackOptions.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.string),
-  onLeaveFeedback: PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onLeaveFeedback: PropTypes.func.isRequired,
 };
 
 export default FeedbackOptions;

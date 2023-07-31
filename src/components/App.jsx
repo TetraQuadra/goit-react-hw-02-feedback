@@ -5,18 +5,6 @@ import Statistics from './Statistics/Statistics';
 import Notification from './Notification/Notification';
 import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
 
-const options = ['good', 'neutral', 'bad'];
-
-const getTotal = state => {
-  return state.good + state.neutral + state.bad;
-};
-
-const countPositiveFeedbackPercentage = state => {
-  const { good } = state;
-  const total = getTotal(state);
-  return Math.round((good / total) * 100);
-};
-
 export class App extends Component {
   state = {
     good: 0,
@@ -30,10 +18,20 @@ export class App extends Component {
     }));
   };
 
+  getTotal() {
+    return this.state.good + this.state.neutral + this.state.bad;
+  }
+
+  countPositiveFeedbackPercentage = () => {
+    const { good } = this.state;
+    const total = this.getTotal();
+    return Math.round((good / total) * 100);
+  };
+
   render() {
     const { good, neutral, bad } = this.state;
-    const total = getTotal(this.state);
-    const positivePercentage = countPositiveFeedbackPercentage(this.state);
+    const total = this.getTotal();
+    const positivePercentage = this.countPositiveFeedbackPercentage(this.state);
 
     const StatisticsComponent = () => {
       return total > 0 ? (
@@ -50,10 +48,10 @@ export class App extends Component {
     };
 
     return (
-      <main style={{ width: 300, margin: '0 auto', textAlign: 'center' }}>
+      <main>
         <Section title="Please leave your feedback">
           <FeedbackOptions
-            options={options}
+            options={Object.keys(this.state)}
             onLeaveFeedback={this.handleFeedbackIncrement}
           />
         </Section>
